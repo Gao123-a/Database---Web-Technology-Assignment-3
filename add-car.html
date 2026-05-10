@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Vehicle</title>
+<style>
+  * {
+     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+   .main-box {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 20px;}
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;}
+  input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  .img-area {
+    border: 1px dashed #ccc;
+    padding: 30px;
+    text-align: center;
+     border-radius: 8px;
+    cursor: pointer;
+  }
+  .submit-btn {
+    background: #2563eb;
+     color: #fff;
+    padding: 14px 20px;
+     border: none;
+    border-radius: 8px;
+     width: 100%;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="main-box">
+  <h2>Add Vehicle</h2>
+  <br>
+
+  <form id="addCarForm">
+    <div class="form-group">
+      <label>Vehicle Color</label>
+      <select name="color" id="color" required>
+        <option value="">Please choose color</option>
+        <option value="white">White</option>
+        <option value="black">Black</option>
+        <option value="silver">Silver</option>
+        <option value="gray">Gray</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Vehicle Type</label>
+      <select name="car_type" id="car_type" required>
+        <option value="">Please choose vehicle type</option>
+        <option value="sedan">Sedan</option>
+        <option value="suv">SUV</option>
+        <option value="mpv">MPV</option>
+        <option value="sports">Sports Car</option>
+        <option value="van">Van</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Manufacture Year</label>
+      <select name="year" id="year" required>
+        <option value="">Please select year</option>
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+        <option value="2020">2020</option>
+        <option value="2019">2019</option>
+        <option value="2018">2018</option>
+        <option value="2017">2017</option>
+        <option value="2016">2016</option>
+        <option value="2015">2015</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Location</label>
+      <input type="text" name="location" id="location" placeholder="e.g. Chaoyang District, Beijing" required>
+    </div>
+
+    <div class="form-group">
+      <label>Vehicle Price (10,000 RMB)</label>
+      <input type="number" step="0.01" name="price" id="price" placeholder="Please enter price" required>
+    </div>
+
+    <div class="form-group">
+      <label>Vehicle Image</label>
+      <div class="img-area">
+        <input type="file" name="car_image" id="car_image" accept="image/*">
+      </div>
+    </div>
+
+   <button class="submit-btn" type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+    document.getElementById('addCarForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        try {
+            const response = await fetch('/api/add-car', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert('Car added successfully!');
+                window.location.href = 'search.html';
+            } else {
+                alert('Error: ' + result.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while adding the car.');
+        }
+    });
+</script>
+</body>
+</html>

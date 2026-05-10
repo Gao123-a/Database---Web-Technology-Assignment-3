@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Registration - Car Sales Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f2f5f8;
+            background-image: url('https://picsum.photos/id/1071/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .register-box {
+            background: white;
+            width: 100%;
+            max-width: 700px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 26px;
+            color: #222;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 35px;
+        }
+        
+        .form-group {
+            margin-bottom: 22px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #0056b3;
+        }
+        
+        .error {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #004494;
+        }
+        
+        @media (max-width: 768px) {
+            .register-box {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-box">
+        <h2 class="title">Seller Registration</h2>
+        <p class="subtitle">Car Sales Platform - Please fill in the information below</p>
+
+        <form id="sellerForm">
+            <!-- a. Name: letters and spaces only -->
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Full Name (letters and spaces only)</label>
+                <input type="text" id="name" name="name" placeholder="e.g. John Smith" required>
+                <div class="error" id="nameErr">Only letters and spaces are allowed.</div>
+            </div>
+
+            <!-- b. Address: alphanumeric + spaces -->
+            <div class="form-group">
+                <label><i class="fas fa-map-marker-alt"></i> Address (alphanumeric and spaces only)</label>
+                <input type="text" id="address" name="address" placeholder="e.g. 123 Main Street" required>
+                <div class="error" id="addrErr">Only letters, numbers and spaces are allowed.</div>
+            </div>
+
+            <!-- c. Phone: Chinese number -->
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Phone Number (China)</label>
+                <input type="tel" id="phone" name="phone" placeholder="11-digit mobile number" required>
+                <div class="error" id="phoneErr">Please enter a valid Chinese phone number.</div>
+            </div>
+
+            <!-- d. Email: must have @, end with .cn or .com -->
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="email" name="email" placeholder="seller@example.com or seller@example.cn" required>
+                <div class="error" id="emailErr">Must include @ and end with .cn or .com</div>
+            </div>
+
+            <!-- e. Username: min 6 alphanumeric -->
+            <div class="form-group">
+                <label><i class="fas fa-id-card"></i> Username (min 6 alphanumeric characters)</label>
+                <input type="text" id="username" name="username" placeholder="Your User ID" required>
+                <div class="error" id="userErr">Username must be at least 6 alphanumeric characters.</div>
+            </div>
+
+            <!-- f. Password: min 6 alphanumeric -->
+            <div class="form-group">
+                <label><i class="fas fa-lock"></i> Password (min 6 alphanumeric characters)</label>
+                <input type="password" id="password" name="password" placeholder="At least 6 letters/numbers" required>
+                <div class="error" id="pwdErr">Password must be at least 6 alphanumeric characters.</div>
+            </div>
+
+            <button type="submit" class="submit-btn">Register</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('sellerForm');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            let valid = true;
+
+            const name = document.getElementById('name').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            // Validation logic
+            const nameReg = /^[A-Za-z\s]+$/;
+            if (!nameReg.test(name)) {
+                document.getElementById('nameErr').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('nameErr').style.display = 'none';
+            }
+
+            const addrReg = /^[A-Za-z0-9\s]+$/;
+            if (!addrReg.test(address)) {
+                document.getElementById('addrErr').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('addrErr').style.display = 'none';
+            }
+
+            const phoneReg = /^1[3-9]\d{9}$/;
+            if (!phoneReg.test(phone)) {
+                document.getElementById('phoneErr').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('phoneErr').style.display = 'none';
+            }
+
+            const emailReg = /^[^\s@]+@[^\s@]+\.(cn|com)$/;
+            if (!emailReg.test(email)) {
+                document.getElementById('emailErr').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('emailErr').style.display = 'none';
+            }
+
+            if (username.length < 6 || !/^[A-Za-z0-9]+$/.test(username)) {
+                document.getElementById('userErr').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('userErr').style.display = 'none';
+            }
+
+            if (password.length < 6 || !/^[A-Za-z0-9]+$/.test(password)) {
+                document.getElementById('pwdErr').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('pwdErr').style.display = 'none';
+            }
+
+            if (valid) {
+                try {
+                    const response = await fetch('/api/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name,
+                            address,
+                            phone,
+                            email,
+                            username,
+                            password
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (response.ok) {
+                        alert('Registration successful!');
+                        window.location.href = 'login.html';
+                    } else {
+                        alert('Error: ' + result.error);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred during registration.');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

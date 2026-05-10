@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>路霸汽车 - 汽车销售</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        header {
+            background-color: #1a1a2e;
+            color: rgb(230, 76, 76);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            margin-left: 24px;
+        }
+        
+        .hero {
+            background-color: #16213e;
+            color: rgb(122, 127, 215);
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .cars-section {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .cars-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .car-card {
+            background-color: #d9c5c5;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .car-card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        
+        .car-card h3 {
+            margin: 15px 0 10px;
+        }
+        
+        .price {
+            color: #e94560;
+            font-size: 20px;
+            font-weight: bold;
+        }
+ 
+        footer {
+            background-color: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+  
+        @media (max-width: 768px) {
+            .car-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .car-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">🚗 AutoTrader Elite</div>
+    <nav>
+        <a href="index.html">Home</a >
+        <a href="login.html">login</a >    
+        <a href="search.html">Vehicles for sale </a >
+        <a href="register.html">Seller registration</a >
+        <a href="add-car.html">Post Listing</a >
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>We don't make cars,We are just the transporters of good cars</h1>
+    <p>Quality Used Cars & New Cars | Trade with confidence</p >
+</section>
+
+<section class="cars-section">
+    <h2>Thunder Hot !!</h2>
+    <div class="car-grid">
+        <div class="car-card">
+            <a href="carBYD.html">BYD</a >
+            <h3>Happy to go</h3>
+            <p>Affordable for the people</p >
+            <div class="price">at least ¥99,900</div>
+        </div>
+        <div class="car-card">
+            <a href="carBMW.html">BMW</a >
+            <h3>set the fashion trend</h3>
+            <p>Quality for home use</p >
+            <div class="price">at least ¥199,900</div>
+        </div>
+        <div class="car-card">
+            <a href="carBenz.html">Benz</a >
+            <h3>Respectful speed</h3>
+            <p>Luxury flagship</p >
+            <div class="price">at least ¥439,900</div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 AutoHub  Car Sales | Honest sales Fake one pays ten</p >
+</footer>
+
+</body>
+</html>

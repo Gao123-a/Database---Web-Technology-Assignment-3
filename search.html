@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Vehicles - AutoTrader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="branding-h1">
+            AutoTrader Elite
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Portal</a></li>
+                <li><a href="search.html">Explore</a></li>
+                <li><a href="register.html">Become Seller</a></li>
+                <li><a href="login.html">Access Account</a></li>
+                <li><a href="add-car.html">Post Listing</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="filter-station">
+            <h2 class="section-title">Refine Your Selection</h2>
+            <form id="vehicleFilterForm" class="filter-box">
+                <div class="input-row">
+                    <label for="modelKeyword">Car Type:</label>
+                    <input type="text" id="modelKeyword" name="modelKeyword" placeholder="Search by car type (e.g. sedan)...">
+                </div>
+                <div class="input-row">
+                    <label for="yearFilter">Release Year:</label>
+                    <input type="number" id="yearFilter" name="yearFilter" min="1900" max="2027" placeholder="Specific year...">
+                </div>
+                <button type="submit" class="action-trigger">Apply Filters</button>
+            </form>
+        </section>
+
+        <section class="inventory-section">
+            <h3 class="section-title">Available Inventory</h3>
+            <div id="resultsContainer" class="inventory-grid">
+                <p class="placeholder-msg">Exploring the database...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AutoTrader. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const resultsContainer = document.getElementById('resultsContainer');
+        const filterForm = document.getElementById('vehicleFilterForm');
+
+        async function fetchCars(carType = '', year = '') {
+            resultsContainer.innerHTML = '<p class="placeholder-msg">Loading...</p>';
+            try {
+                const response = await fetch(`/api/search?car_type=${carType}&year=${year}`);
+                const cars = await response.json();
+
+                resultsContainer.innerHTML = '';
+                if (cars.length === 0) {
+                    resultsContainer.innerHTML = '<p class="placeholder-msg">No cars found.</p>';
+                    return;
+                }
+
+                cars.forEach(car => {
+                    const carElement = document.createElement('div');
+                    carElement.className = 'listing-item';
+                    carElement.innerHTML = `
+                        <img src="${car.image_path}" alt="${car.car_type}" style="width:100%; border-radius:8px;">
+                        <div class="listing-details">
+                            <h4>${car.car_type} (${car.year})</h4>
+                            <p class="price-tag">¥${car.price} 万</p>
+                            <p>Color: ${car.color}</p>
+                            <p>Location: ${car.location}</p>
+                        </div>
+                    `;
+                    resultsContainer.appendChild(carElement);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                resultsContainer.innerHTML = '<p class="placeholder-msg">Error fetching data.</p>';
+            }
+        }
+
+        filterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const carType = document.getElementById('modelKeyword').value;
+            const year = document.getElementById('yearFilter').value;
+            fetchCars(carType, year);
+        });
+
+        // Initial fetch
+        fetchCars();
+    </script>
+</body>
+</html>
+
+
+
+
+

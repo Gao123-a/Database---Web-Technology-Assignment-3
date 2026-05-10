@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Login - AutoTrader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="branding-h1">
+            AutoTrader Elite
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Portal</a></li>
+                <li><a href="search.html">Explore</a></li>
+                <li><a href="register.html">Become Seller</a></li>
+                <li><a href="login.html">Access Account</a></li>
+                <li><a href="add-car.html">Post Listing</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-card">
+            <h2 class="section-title">Seller Access</h2>
+            <form id="accessForm">
+                <div class="input-row">
+                    <label for="uid">System Username:</label>
+                    <input type="text" id="uid" name="uid" required>
+                </div>
+                <div class="input-row">
+                    <label for="pwd">Security Password:</label>
+                    <input type="password" id="pwd" name="pwd" required>
+                </div>
+                <button type="submit" class="action-trigger" style="width:100%">Authenticate</button>
+            </form>
+            <p style="text-align:center; margin-top:1.5rem;">New to the platform? <a href="register.html" style="color:var(--brand-navy)">Apply for Membership</a></p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AutoTrader. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('accessForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('uid').value;
+            const password = document.getElementById('pwd').value;
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password
+                    })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Login successful!');
+                    window.location.href = result.redirect;
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred during login.');
+            }
+        });
+    </script>
+</body>
+
+</html>
